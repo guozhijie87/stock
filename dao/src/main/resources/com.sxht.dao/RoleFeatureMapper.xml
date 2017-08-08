@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sxht.dao.RoleFeatureMapper">
+  <resultMap id="BaseResultMap" type="com.sxht.model.RoleFeature">
+    <id column="featureid" jdbcType="VARCHAR" property="featureid" />
+    <id column="roleid" jdbcType="VARCHAR" property="roleid" />
+    <result column="enable" jdbcType="BIT" property="enable" />
+    <result column="visible" jdbcType="BIT" property="visible" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    featureid, roleid, enable, visible
+  </sql>
+  <select id="selectByExample" parameterType="com.sxht.model.RoleFeatureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rolefeature
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.sxht.model.RoleFeatureKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rolefeature
+    where featureid = #{featureid,jdbcType=VARCHAR}
+      and roleid = #{roleid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.sxht.model.RoleFeatureKey">
+    delete from rolefeature
+    where featureid = #{featureid,jdbcType=VARCHAR}
+      and roleid = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sxht.model.RoleFeatureExample">
+    delete from rolefeature
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sxht.model.RoleFeature">
+    insert into rolefeature (featureid, roleid, enable, 
+      visible)
+    values (#{featureid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, 
+      #{visible,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sxht.model.RoleFeature">
+    insert into rolefeature
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="featureid != null">
+        featureid,
+      </if>
+      <if test="roleid != null">
+        roleid,
+      </if>
+      <if test="enable != null">
+        enable,
+      </if>
+      <if test="visible != null">
+        visible,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="featureid != null">
+        #{featureid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="visible != null">
+        #{visible,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sxht.model.RoleFeatureExample" resultType="java.lang.Integer">
+    select count(*) from rolefeature
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rolefeature
+    <set>
+      <if test="record.featureid != null">
+        featureid = #{record.featureid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null">
+        roleid = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enable != null">
+        enable = #{record.enable,jdbcType=BIT},
+      </if>
+      <if test="record.visible != null">
+        visible = #{record.visible,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rolefeature
+    set featureid = #{record.featureid,jdbcType=VARCHAR},
+      roleid = #{record.roleid,jdbcType=VARCHAR},
+      enable = #{record.enable,jdbcType=BIT},
+      visible = #{record.visible,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sxht.model.RoleFeature">
+    update rolefeature
+    <set>
+      <if test="enable != null">
+        enable = #{enable,jdbcType=BIT},
+      </if>
+      <if test="visible != null">
+        visible = #{visible,jdbcType=BIT},
+      </if>
+    </set>
+    where featureid = #{featureid,jdbcType=VARCHAR}
+      and roleid = #{roleid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sxht.model.RoleFeature">
+    update rolefeature
+    set enable = #{enable,jdbcType=BIT},
+      visible = #{visible,jdbcType=BIT}
+    where featureid = #{featureid,jdbcType=VARCHAR}
+      and roleid = #{roleid,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByRoleId" parameterType="java.lang.String" >
+    delete from rolefeature
+    where roleid = #{roleid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByFeatureId" parameterType="java.lang.String" >
+    delete from rolefeature
+    where featureid = #{featureId,jdbcType=VARCHAR}
+  </delete>
+</mapper>
